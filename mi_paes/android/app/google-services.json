@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "110735389544",
+    "project_id": "mipaes-69fd6",
+    "storage_bucket": "mipaes-69fd6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110735389544:android:a122082ca35db51e12dcdd",
+        "android_client_info": {
+          "package_name": "com.example.mi_paes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlP761xRnjwWnizvwDJlF-RSYRFYqAY4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
