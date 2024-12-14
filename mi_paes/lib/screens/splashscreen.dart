@@ -42,10 +42,25 @@ class _SplashScreenState extends State<SplashScreen> {
           duration:
               const Duration(milliseconds: 500), // Duración de la animación
           opacity: opacity,
-          child: Image.asset(
-            'lib/assets/images/logo.png', //Ruta de la imagen, recuerda la extensión
-            width: 150, //Ajusta el tamaño de la imagen
-            height: 150,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'lib/assets/images/logo.png', //Ruta de la imagen, recuerda la extensión
+                width: 150, //Ajusta el tamaño de la imagen
+                height: 150,
+              ),
+              const SizedBox(height: 20), //Espacio entre el icono y el texto
+              const Text(
+                'MiPaes.cl',
+                style: TextStyle(
+                  fontFamily:
+                      'BricolageGrotesque-SemiBold', //Nombre de la fuente personalizada
+                  fontSize: 40, //Tamaño de la fuente
+                  color: Colors.black, //Color del texto
+                ),
+              ),
+            ],
           ),
         ),
       ),

@@ -28,3 +28,8 @@ flutter:
 
   assets:
     - lib/assets/images/logo.png
+
+  fonts:
+    - family: BricolageGrotesque-SemiBold #Nombre de la fuente
+      fonts:
+        - asset: lib/assets/fonts/BricolageGrotesque-SemiBold.ttf

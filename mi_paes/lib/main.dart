@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_paes/screens/splashscreen.dart'; // Importa el archivo splashscreen.dart
 import 'package:mi_paes/theme/theme.dart'; //Theme
+import 'package:mi_paes/screens/home.dart';
 
 void main() {
   runApp(const MainApp());
@@ -27,19 +28,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold (
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, //Centra la columna verticalmente
-          children: [
-            Text('Soy el Home de la app'),
-            Text('Soy el Home de la app'),
-            Text('Soy el Home de la app'),
-            Text('Soy el Home de la app'),
-            Text('Soy el Home de la app'),
-          ],
-        ),
-      ),
-    ); // 
+    return const HomScreen();
   }
 }
