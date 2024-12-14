@@ -1,6 +1,7 @@
 // main.dart
 import 'package:flutter/material.dart';
 import 'package:mi_paes/screens/splashscreen.dart'; // Importa el archivo splashscreen.dart
+import 'package:mi_paes/theme/theme.dart'; //Theme
 
 void main() {
   runApp(const MainApp());
@@ -12,7 +13,9 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      themeMode: ThemeMode.system, // Cambia según la configuración del sistema
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.system,
       home: const SplashScreen(), // La primera pantalla será el SplashScreen
     );
   }
