@@ -35,17 +35,20 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor:
+          Theme.of(context).colorScheme.secondary, //Color de fondo secundario
       body: Center(
         child: AnimatedOpacity(
-          duration: const Duration(milliseconds: 500), // Duración de la animación
+          duration:
+              const Duration(milliseconds: 500), // Duración de la animación
           opacity: opacity,
-          child: const Text(
-                'Soy el Splashscreen',
-                style: TextStyle(fontSize: 24),
-              ),
+          child: Image.asset(
+            'lib/assets/images/logo.png', //Ruta de la imagen, recuerda la extensión
+            width: 150, //Ajusta el tamaño de la imagen
+            height: 150,
           ),
         ),
-      );
+      ),
+    );
   }
 }
