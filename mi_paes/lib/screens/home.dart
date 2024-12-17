@@ -1,8 +1,26 @@
 import 'package:flutter/material.dart';
-import 'materias_screen.dart';
 
-class HomScreen extends StatelessWidget {
+class HomScreen extends StatefulWidget {
   const HomScreen({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomScreen> {
+  final List<Map<String, dynamic>> _subjects = [
+    {'name': 'Competencia lectoras', 'color': Colors.blue},
+    {'name': 'Ciencias - Biología', 'color': Colors.green},
+    {'name': 'Física', 'color': Colors.orange},
+    {'name': 'Historia y ciencias sociales', 'color': Colors.purple},
+  ];
+
+  void _addSubject(String subjectName) {
+    setState(() {
+      _subjects.add({'name': subjectName, 'color': Colors.grey});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +66,9 @@ class HomScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Puntajes', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text('Puntajes',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
                     SizedBox(height: 10),
                     _buildProgressRow('Historia', 0.8, Colors.purple),
                     _buildProgressRow('Ciencia - Biología', 0.6, Colors.green),
@@ -57,12 +77,18 @@ class HomScreen extends StatelessWidget {
                     Center(
                       child: Column(
                         children: [
-                          Text('Ponderación', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                          Text('Ponderación',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold)),
                           SizedBox(height: 10),
                           CircleAvatar(
                             radius: 50,
                             backgroundColor: Colors.green,
-                            child: Text('860', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
+                            child: Text('860',
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
                           ),
                         ],
                       ),
@@ -72,7 +98,8 @@ class HomScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               // Materias
-              Text('MATERIAS', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text('MATERIAS',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               SizedBox(height: 10),
               GridView.count(
                 shrinkWrap: true,
@@ -80,24 +107,14 @@ class HomScreen extends StatelessWidget {
                 crossAxisCount: 2,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => MateriasScreen()),
-                      );
-                    },
-                    child: _buildSubjectCard('Competencia lectoras', Colors.blue),
-                  ),
-                  _buildSubjectCard('Ciencias - Biología', Colors.green),
-                  _buildSubjectCard('Física', Colors.orange),
-                  _buildSubjectCard('Historia y ciencias sociales', Colors.purple),
-                ],
+                children: _subjects.map((subject) {
+                  return _buildSubjectCard(subject['name'], subject['color']);
+                }).toList(),
               ),
               SizedBox(height: 20),
               // Otros
-              Text('OTROS', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text('OTROS',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {},
@@ -119,6 +136,44 @@ class HomScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          String newSubject = '';
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Agregar Nueva Materia'),
+                content: TextField(
+                  decoration: InputDecoration(hintText: 'Nombre de la materia'),
+                  onChanged: (value) {
+                    newSubject = value;
+                  },
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Cancelar'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      if (newSubject.isNotEmpty) {
+                        _addSubject(newSubject);
+                      }
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Agregar'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        backgroundColor: Colors.purple,
+        child: Icon(Icons.add, color: Colors.white),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
@@ -160,7 +215,7 @@ class HomScreen extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-),
-);
-}
+      ),
+    );
+  }
 }

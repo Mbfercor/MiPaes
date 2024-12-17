@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'matematicas_screen.dart';
 
 class MateriasScreen extends StatelessWidget {
   const MateriasScreen({super.key});
@@ -38,7 +39,16 @@ class MateriasScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildSection('MATEMÁTICAS', [
-                _buildSubjectTile('Matemáticas 1', Colors.orange),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MatematicasScreen()),
+                    );
+                  },
+                  child: _buildSubjectTile('Matemáticas 1', Colors.orange),
+                ),
                 _buildSubjectTile('Matemáticas 2', Colors.orange),
               ]),
               SizedBox(height: 20),
