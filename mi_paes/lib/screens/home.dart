@@ -15,7 +15,6 @@ class _MantenedorState extends State<Mantenedor> {
   int _currentIndex = 0;
 
   //Cantidad de pantallas que se desean, un array con todas las pantallas
-
   final List<Widget> _screens = <Widget>[
     const PuntajesScreen(), //Pantalla de puntajes
     const RamosScreen(), //Pantalla de materias
@@ -95,6 +94,17 @@ class InicioScreen extends StatefulWidget {
 }
 
 class _InicioScreenState extends State<InicioScreen> {
+
+  // Lista de colores personalizada
+  final List<Color> _colors = [
+    Colors.purple,
+    Colors.green,
+    Colors.orange,
+    Colors.blue,
+    Colors.red,
+    Colors.teal,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -207,17 +217,21 @@ class _InicioScreenState extends State<InicioScreen> {
 
                   final materias = snapshot.data!.docs;
 
-                  return GridView.count(
+                  return GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                    children: materias.map((materia) {
-                      final data = materia.data() as Map<String, dynamic>;
-                      return _buildSubjectCard(
-                          data['Nombre de la materia'] ?? '', Colors.grey);
-                    }).toList(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                    ),
+
+                    itemCount: materias.length,
+                    itemBuilder: (context, index) {
+                      final data = materias[index].data() as Map<String, dynamic>;
+                      final title = data['Nombre de la materia'] ?? '';
+                      return _buildSubjectCard(title, _colors[index % _colors.length]);
+                    },
                   );
                 },
               ),
@@ -339,17 +353,115 @@ class _InicioScreenState extends State<InicioScreen> {
   }
 }
 
-//Pantalla para mostrar el contenido del ensayos
-class EnsayosScreen extends StatelessWidget {
+//Pantalla para mostrar el contenido de ensayos
+class EnsayosScreen extends StatefulWidget {
   const EnsayosScreen({super.key});
 
   @override
+  State<EnsayosScreen> createState() => _EnsayosScreenState();
+}
+
+class _EnsayosScreenState extends State<EnsayosScreen> {
+  @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Ensayos'));
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.purple,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Icon(Icons.person, color: Colors.purple),
+            ),
+            Flexible(
+              child: const Text(
+                'Ejercicios de Refuerzo',
+                style: TextStyle(
+                  color: Colors.white,
+                  overflow: TextOverflow
+                      .ellipsis, // Evita overflow si el texto es muy largo
+                ),
+              ),
+            ),
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.settings, color: Colors.white),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: const Icon(Icons.notifications, color: Colors.white),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 10),
+              Text(
+                'EJERCICIOS DE REFUERZO',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 20),
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.purple[100],
+                  border: Border.all(color: Colors.blue, width: 2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Reglas del ensayo',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."',
+                      style: TextStyle(fontSize: 14, color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 12, horizontal: 32),
+                      ),
+                      child: Text(
+                        'COMENZAR',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 30),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
-//Pantalla para mostrar el contenido del ensayos
+//Pantalla para mostrar el contenido de ayuda
 class AyudaScreen extends StatelessWidget {
   const AyudaScreen({super.key});
 
