@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'matematicas_screen.dart';
 
 class MateriasScreen extends StatelessWidget {
-  const MateriasScreen({super.key});
+  final String materiaName;
+
+  // Constructor que recibe el nombre de la materia
+  const MateriasScreen({super.key, required this.materiaName});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class MateriasScreen extends StatelessWidget {
               backgroundColor: Colors.white,
               child: Icon(Icons.person, color: Colors.purple),
             ),
-            Text('Materias', style: TextStyle(color: Colors.white)),
+            Text(materiaName, style: TextStyle(color: Colors.white)), // Mostrar el nombre de la materia
             Row(
               children: [
                 IconButton(
@@ -63,8 +66,7 @@ class MateriasScreen extends StatelessWidget {
               ]),
               SizedBox(height: 20),
               _buildSection('HISTORIA', [
-                _buildSubjectTile(
-                    'Historia y ciencias sociales', Colors.purple),
+                _buildSubjectTile('Historia y ciencias sociales', Colors.purple),
               ]),
             ],
           ),

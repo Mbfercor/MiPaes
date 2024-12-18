@@ -1,27 +1,100 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mi_paes/components/formulario_materias.dart';
+import 'package:mi_paes/screens/materias_screen.dart';
 
-class HomScreen extends StatefulWidget {
-  const HomScreen({super.key});
+class Mantenedor extends StatefulWidget {
+  const Mantenedor({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _HomeScreenState createState() => _HomeScreenState();
+  _MantenedorState createState() => _MantenedorState();
 }
 
-class _HomeScreenState extends State<HomScreen> {
-  final List<Map<String, dynamic>> _subjects = [
-    {'name': 'Competencia lectoras', 'color': Colors.blue},
-    {'name': 'Ciencias - Biología', 'color': Colors.green},
-    {'name': 'Física', 'color': Colors.orange},
-    {'name': 'Historia y ciencias sociales', 'color': Colors.purple},
+class _MantenedorState extends State<Mantenedor> {
+  int _currentIndex = 0;
+
+  //Cantidad de pantallas que se desean, un array con todas las pantallas
+
+  final List<Widget> _screens = <Widget>[
+    const PuntajesScreen(), //Pantalla de puntajes
+    const RamosScreen(), //Pantalla de materias
+    const InicioScreen(), //Pantalla del home
+    const EnsayosScreen(), //Pantalla de ensayos
+    const AyudaScreen(), //Pantalla de ayuda
   ];
 
-  void _addSubject(String subjectName) {
+  //Funcion para cambiar la pantalla cuando el usuario toca un icono, mas abajo esta setState()
+  void _onItemTapped(int index) {
     setState(() {
-      _subjects.add({'name': subjectName, 'color': Colors.grey});
+      _currentIndex = index;
     });
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _screens[_currentIndex], //Muestra la pantalla seleccionada
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex, //Índice actual de la barra de navegación
+        onTap:
+            _onItemTapped, //Llama a la funcion cuando se selecciona una pestaña
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu_book),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.language),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.book),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.help),
+            label: '',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+//Pantalla para mostrar el contenido de puntajes
+class PuntajesScreen extends StatelessWidget {
+  const PuntajesScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('Puntajes'));
+  }
+}
+
+//Pantalla para mostrar el contenido de materias
+class RamosScreen extends StatelessWidget {
+  const RamosScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('Materias'));
+  }
+}
+
+//Pantalla para mostrar el contenido del home
+class InicioScreen extends StatefulWidget {
+  const InicioScreen({super.key});
+
+  @override
+  State<InicioScreen> createState() => _InicioScreenState();
+}
+
+class _InicioScreenState extends State<InicioScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,15 +107,15 @@ class _HomeScreenState extends State<HomScreen> {
               backgroundColor: Colors.white,
               child: Icon(Icons.person, color: Colors.purple),
             ),
-            Text('Home', style: TextStyle(color: Colors.white)),
+            const Text('Home', style: TextStyle(color: Colors.white)),
             Row(
               children: [
                 IconButton(
-                  icon: Icon(Icons.settings, color: Colors.white),
+                  icon: const Icon(Icons.settings, color: Colors.white),
                   onPressed: () {},
                 ),
                 IconButton(
-                  icon: Icon(Icons.notifications, color: Colors.white),
+                  icon: const Icon(Icons.notifications, color: Colors.white),
                   onPressed: () {},
                 ),
               ],
@@ -58,7 +131,7 @@ class _HomeScreenState extends State<HomScreen> {
             children: [
               // Puntajes y Ponderación
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.yellow[700],
                   borderRadius: BorderRadius.circular(12),
@@ -66,29 +139,40 @@ class _HomeScreenState extends State<HomScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Puntajes',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 10),
+                    const Text(
+                      'Puntajes',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
                     _buildProgressRow('Historia', 0.8, Colors.purple),
                     _buildProgressRow('Ciencia - Biología', 0.6, Colors.green),
                     _buildProgressRow('Matemáticas M1', 0.9, Colors.orange),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Center(
                       child: Column(
                         children: [
-                          Text('Ponderación',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold)),
-                          SizedBox(height: 10),
+                          const Text(
+                            'Ponderación',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
                           CircleAvatar(
                             radius: 50,
                             backgroundColor: Colors.green,
-                            child: Text('860',
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white)),
+                            child: const Text(
+                              '860',
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -96,42 +180,70 @@ class _HomeScreenState extends State<HomScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
-              // Materias
-              Text('MATERIAS',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              SizedBox(height: 10),
-              GridView.count(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                children: _subjects.map((subject) {
-                  return _buildSubjectCard(subject['name'], subject['color']);
-                }).toList(),
+              const SizedBox(height: 20),
+              // Materias desde Firebase
+              const Text(
+                'MATERIAS',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 10),
+              StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('materias')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  }
+
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return const Center(
+                        child: Text('No hay registros disponibles.'));
+                  }
+
+                  final materias = snapshot.data!.docs;
+
+                  return GridView.count(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    children: materias.map((materia) {
+                      final data = materia.data() as Map<String, dynamic>;
+                      return _buildSubjectCard(
+                          data['Nombre de la materia'] ?? '', Colors.grey);
+                    }).toList(),
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
               // Otros
-              Text('OTROS',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              SizedBox(height: 10),
+              const Text(
+                'OTROS',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
-                  minimumSize: Size(double.infinity, 50),
+                  minimumSize: const Size(double.infinity, 50),
                 ),
-                child: Text('REALIZA UN ENSAYO'),
+                child: const Text('REALIZA UN ENSAYO'),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.purple,
-                  minimumSize: Size(double.infinity, 50),
+                  minimumSize: const Size(double.infinity, 50),
                 ),
-                child: Text('SALUD MENTAL'),
+                child: const Text('SALUD MENTAL'),
               ),
             ],
           ),
@@ -139,49 +251,42 @@ class _HomeScreenState extends State<HomScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          String newSubject = '';
-          showDialog(
+          showModalBottomSheet(
+            isScrollControlled: true,
             context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Agregar Nueva Materia'),
-                content: TextField(
-                  decoration: InputDecoration(hintText: 'Nombre de la materia'),
-                  onChanged: (value) {
-                    newSubject = value;
-                  },
+            backgroundColor: Colors.transparent,
+            builder: (context) => FractionallySizedBox(
+              heightFactor: 0.9, // Ajusta la altura del modal
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                 ),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('Cancelar'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      if (newSubject.isNotEmpty) {
-                        _addSubject(newSubject);
-                      }
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('Agregar'),
-                  ),
-                ],
-              );
-            },
+                child: Stack(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child:
+                          FormularioScreen(), // Mantengo el formulario_materias aquí
+                    ),
+                    Positioned(
+                      top: 16,
+                      right: 16,
+                      child: IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Cierra el modal
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           );
         },
         backgroundColor: Colors.purple,
-        child: Icon(Icons.add, color: Colors.white),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.language), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.help), label: ''),
-        ],
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -204,18 +309,52 @@ class _HomeScreenState extends State<HomScreen> {
   }
 
   Widget _buildSubjectCard(String title, Color color) {
-    return Container(
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Center(
-        child: Text(
-          title,
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+    return GestureDetector(
+      onTap: () {
+        // Al hacer clic, navegamos a MateriasScreen pasando el nombre de la materia
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MateriasScreen(materiaName: title),
+          ),
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Center(
+          child: Text(
+            title,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ),
     );
+  }
+}
+
+//Pantalla para mostrar el contenido del ensayos
+class EnsayosScreen extends StatelessWidget {
+  const EnsayosScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('Ensayos'));
+  }
+}
+
+//Pantalla para mostrar el contenido del ensayos
+class AyudaScreen extends StatelessWidget {
+  const AyudaScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('Ayuda'));
   }
 }

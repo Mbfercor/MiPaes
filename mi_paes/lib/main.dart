@@ -1,10 +1,15 @@
-// main.dart
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:mi_paes/firebase_options.dart';
 import 'package:mi_paes/screens/splashscreen.dart'; // Importa el archivo splashscreen.dart
 import 'package:mi_paes/theme/theme.dart'; //Theme
 import 'package:mi_paes/screens/home.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MainApp());
 }
 
@@ -28,6 +33,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HomScreen();
+    return Mantenedor();
   }
 }
